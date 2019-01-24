@@ -6,13 +6,52 @@ import { LeaderboardType } from './self-defined/enums';
     providedIn: "root"
 })
 export class StoreService {
-    host = "http://localhost:1000";
+    host = "http://ec2-35-182-253-71.ca-central-1.compute.amazonaws.com:8000";
     constructor(private http: HttpClient) {}
 
     getLeaderboard(type:LeaderboardType, numb:Number = 50, callback:Function) {
         var uri = this.host + "/leaderboard/current/" + type.toLowerCase() + '/' + numb;
         this.http.get(uri).subscribe((data) => {
             callback(data);
+        });
+    }
+
+    getClanGames(war:number=1, callback:Function) {
+        var uri = this.host + "/leaderboard/current/" + war;
+        this.http.get(uri).subscribe((data) => {
+            callback(data);
+        });
+    }
+
+    getFighters(user:string = "Earleking", callback:Function) {
+        var uri = this.host + "/player/challenge/" + user;
+        this.http.get(uri).subscribe((data) => {
+            callback(data);
+        });
+    }
+
+    checkClient(callback:Function) {
+        var uri = "http://localhost:4800/lol/me"
+        this.http.get(uri).subscribe((data) => {
+            callback(data);
+        }, (err) => {
+            callback({"error": 400});
+        });
+    }
+
+    setupLobby(url:string, otherUser:object, callback:Function) {
+        var options = {
+            body: {
+                "toSummonerId": otherUser
+            }
+        }
+        this.http.put(url, options).subscribe((res) => {
+            callback(res);
+        });
+    }
+    acceptLobby(url:string, from:string, callback:Function) {
+        this.http.put(url, {"acceptSummonerId": from}).subscribe((res) => {
+            callback(res);
         });
     }
 }

@@ -1,0 +1,35 @@
+<div class="main-container">
+    <div class="table-title">{{title}}  </div><img src="../../assets/info-icon.png" class="info-img"/>
+    <table>
+        <thead >
+            <tr style="background-color: white ">
+                <td>
+                    <img src="../../assets/Person%20Icon.png" class="icon-img"/>
+                    <b>player</b>
+                </td>
+                <td>
+                    <img src="../../assets/score.png" class="icon-img"/>
+                    <b>Clan</b>
+                </td>
+                <td>
+                    <b>Fight Button</b>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let fighter of board">
+                <td>{{fighter.player_name}}</td>
+                <td>{{fighter.clan_name}}</td>
+                <td><button *ngIf="inchallenge == false" (click)="fightPlayer(fighter)">FIGHT ME</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- <div class="overlay-back">
+    <div class="overlay">
+        <div class="overlay-title">What is this page?</div>
+        <hr style="background-color: black; width: 80%;">
+        <p>This is </p>
+    </div>
+</div> -->
